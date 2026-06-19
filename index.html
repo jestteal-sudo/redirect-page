@@ -8,7 +8,7 @@
     <script>
         var params = new URLSearchParams(window.location.search);
         var email = params.get('email') || '';
-        var target = 'www.google.com';
+        var target = 'https://www.google.com';
         if (email) target += '?email=' + encodeURIComponent(email);
         window.location.href = target;
     </script>
